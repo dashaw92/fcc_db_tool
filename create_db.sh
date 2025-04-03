@@ -7,8 +7,8 @@ function printCol() {
 }
 
 printCol "Downloading FCC's latest 'l_amat.zip'."
-# rm l_amat.zip
-# wget ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip
+rm l_amat.zip
+wget ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip
 printCol "Extracting data files fro l_amat.zip."
 rm EN.dat EN.csv
 rm AM.dat AM.csv
