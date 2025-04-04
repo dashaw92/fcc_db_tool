@@ -8,7 +8,7 @@ function printCol() {
 
 printCol "Downloading FCC's latest 'l_amat.zip'."
 wget -O l_amat.zip ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip
-printCol "Extracting data files fro l_amat.zip."
+printCol "Extracting data files from l_amat.zip."
 unzip l_amat.zip
 printCol "Importing data into 'fcc.db'."
 sqlite3 fcc.db < import.sql
