@@ -198,3 +198,45 @@ CREATE TABLE SpecialCondFreeForm
 .import LA.dat Attachment
 .import SC.dat SpecialCond
 .import SF.dat SpecialCondFreeForm
+
+-- Reformats all date columns to a sortable format
+
+UPDATE Attachment
+SET attachment_date =
+	SUBSTR(attachment_date, 7, 4) || "-" || SUBSTR(attachment_date, 1, 2) || "-" || SUBSTR(attachment_date, 4, 2)
+WHERE attachment_date <> '';
+	
+UPDATE History
+SET log_date =
+	SUBSTR(log_date, 7, 4) || "-" || SUBSTR(log_date, 1, 2) || "-" || SUBSTR(log_date, 4, 2)
+WHERE log_date <> '';
+
+UPDATE Comments
+SET comment_date = 
+	SUBSTR(comment_date, 7, 4) || "-" || SUBSTR(comment_date, 1, 2) || "-" || SUBSTR(comment_date, 4, 2)
+WHERE comment_date <> '';
+
+UPDATE Header
+SET grant_date =
+    SUBSTR(grant_date, 7, 4) || "-" || SUBSTR(grant_date, 1, 2) || "-" || SUBSTR(grant_date, 4, 2)
+WHERE grant_date <> '';
+
+UPDATE Header
+SET expired_date =
+    SUBSTR(expired_date, 7, 4) || "-" || SUBSTR(expired_date, 1, 2) || "-" || SUBSTR(expired_date, 4, 2)
+WHERE expired_date <> '';
+
+UPDATE Header
+SET cancellation_date =
+    SUBSTR(cancellation_date, 7, 4) || "-" || SUBSTR(cancellation_date, 1, 2) || "-" || SUBSTR(cancellation_date, 4, 2)
+WHERE cancellation_date <> '';
+
+UPDATE Header
+SET effective_date =
+    SUBSTR(effective_date, 7, 4) || "-" || SUBSTR(effective_date, 1, 2) || "-" || SUBSTR(effective_date, 4, 2)
+WHERE effective_date <> '';
+
+UPDATE Header
+SET last_action_date =
+    SUBSTR(last_action_date, 7, 4) || "-" || SUBSTR(last_action_date, 1, 2) || "-" || SUBSTR(last_action_date, 4, 2)
+WHERE last_action_date <> '';
