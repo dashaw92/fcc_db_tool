@@ -13,10 +13,11 @@ function stripCRCRNL() {
   done
 }
 
-if [ "$1" == "fetch" ]; then
+if [ "$1" == "fetch" ] || [ ! -f "l_amat.zip" ]; then
   printCol "Downloading FCC's latest 'l_amat.zip'."
   wget -O l_amat.zip ftp://wirelessftp.fcc.gov/pub/uls/complete/l_amat.zip
 fi
+
 printCol "Extracting data files from l_amat.zip."
 unzip l_amat.zip
 printCol "Removing quotes from EN.dat."
