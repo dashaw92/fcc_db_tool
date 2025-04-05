@@ -1,3 +1,4 @@
+.print "Dropping existing tables (sanity)."
 DROP TABLE IF EXISTS Amateur;
 DROP TABLE IF EXISTS Entity;
 DROP TABLE IF EXISTS Comments;
@@ -7,6 +8,8 @@ DROP TABLE IF EXISTS Attachment;
 DROP TABLE IF EXISTS SpecialCond;
 DROP TABLE IF EXISTS SpecialCondFreeForm;
 
+.print "Creating tables."
+.print "\t- Amateur"
 CREATE TABLE Amateur
 (
       record_type               char(2)              not null,
@@ -29,6 +32,7 @@ CREATE TABLE Amateur
       trustee_name              varchar(50)          null
 );
 
+.print "\t- Entity"
 CREATE TABLE Entity
 (
       record_type               char(2)              not null,
@@ -63,6 +67,7 @@ CREATE TABLE Entity
       linked_callsign		    char(10)		     null
 );
 
+.print "\t- Comments"
 CREATE TABLE Comments
 (
       record_type               char(2)              not null,
@@ -75,6 +80,7 @@ CREATE TABLE Comments
       status_date		        datetime             null
 );
 
+.print "\t- Header"
 CREATE TABLE Header
 (
       record_type               char(2)              not null,
@@ -138,6 +144,7 @@ CREATE TABLE Header
       payment_cert_900        char(1)              null
 );
 
+.print "\t- History"
 CREATE TABLE History
 (
       record_type               char(2)              not null,
@@ -148,6 +155,7 @@ CREATE TABLE History
       code                      char(6)              null
 );
 
+.print "\t- Attachment"
 CREATE TABLE Attachment
  (
       record_type               char(2)              null ,
@@ -160,10 +168,9 @@ CREATE TABLE Attachment
       action_performed          char(1)              Null
 );
 
+.print "\t- SpecialCond"
 CREATE TABLE SpecialCond
 (
-
-
       record_type               char(2)              null,
       unique_system_identifier  numeric(9,0)         not null,
       uls_file_number           char(14)              null,
@@ -175,6 +182,7 @@ CREATE TABLE SpecialCond
 	status_date		datetime		null
 );
 
+.print "\t- SpecialCondFreeForm"
 CREATE TABLE SpecialCondFreeForm
 (
       record_type               char(2)              null ,
@@ -190,52 +198,71 @@ CREATE TABLE SpecialCondFreeForm
 	status_date		datetime		null
 );
 
+.print "Importing dat files into tables."
+
+.print "\t- AM.dat => Amateur"
 .import AM.dat Amateur
+.print "\t- CO.dat => Comments"
 .import CO.dat Comments
+.print "\t- EN.dat => Entity"
 .import EN.dat Entity
+.print "\t- HD.dat => Header"
 .import HD.dat Header
+.print "\t- HS.dat => History"
 .import HS.dat History
+.print "\t- LA.dat => Attachment"
 .import LA.dat Attachment
+.print "\t- SC.dat => SpecialCond"
 .import SC.dat SpecialCond
+.print "\t- SF.dat => SpecialCondFreeForm"
 .import SF.dat SpecialCondFreeForm
 
 -- Reformats all date columns to a sortable format
 
+.print "Altering all rows with dates to enable sorting."
+.print "\t- Attachment.attachment_date"
 UPDATE Attachment
 SET attachment_date =
 	SUBSTR(attachment_date, 7, 4) || "-" || SUBSTR(attachment_date, 1, 2) || "-" || SUBSTR(attachment_date, 4, 2)
 WHERE attachment_date <> '';
 	
+.print "\t- History.log_date"
 UPDATE History
 SET log_date =
 	SUBSTR(log_date, 7, 4) || "-" || SUBSTR(log_date, 1, 2) || "-" || SUBSTR(log_date, 4, 2)
 WHERE log_date <> '';
 
+.print "\t- Comments.comment_date"
 UPDATE Comments
 SET comment_date = 
 	SUBSTR(comment_date, 7, 4) || "-" || SUBSTR(comment_date, 1, 2) || "-" || SUBSTR(comment_date, 4, 2)
 WHERE comment_date <> '';
 
+.print "\t- Header.grant_date"
 UPDATE Header
 SET grant_date =
     SUBSTR(grant_date, 7, 4) || "-" || SUBSTR(grant_date, 1, 2) || "-" || SUBSTR(grant_date, 4, 2)
 WHERE grant_date <> '';
 
+.print "\t- Header.expired_date"
 UPDATE Header
 SET expired_date =
     SUBSTR(expired_date, 7, 4) || "-" || SUBSTR(expired_date, 1, 2) || "-" || SUBSTR(expired_date, 4, 2)
 WHERE expired_date <> '';
 
+.print "\t- Header.cancellation_date"
 UPDATE Header
 SET cancellation_date =
     SUBSTR(cancellation_date, 7, 4) || "-" || SUBSTR(cancellation_date, 1, 2) || "-" || SUBSTR(cancellation_date, 4, 2)
 WHERE cancellation_date <> '';
 
+.print "\t- Header.effective_date"
 UPDATE Header
 SET effective_date =
     SUBSTR(effective_date, 7, 4) || "-" || SUBSTR(effective_date, 1, 2) || "-" || SUBSTR(effective_date, 4, 2)
 WHERE effective_date <> '';
 
+.print "\t- Header.last_action_date"
 UPDATE Header
 SET last_action_date =
     SUBSTR(last_action_date, 7, 4) || "-" || SUBSTR(last_action_date, 1, 2) || "-" || SUBSTR(last_action_date, 4, 2)
