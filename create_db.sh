@@ -2,9 +2,7 @@
 # https://groups.io/g/nodered-hamradio/topic/fcc_database_download_csv/84399611
 # Expanded on by dashaw92
 
-function printCol() {
-  echo -e "\033[47;30m$1\033[00m"
-}
+. ./_prelude.sh
 
 function stripCRCRNL() {
   for file in "$@"; do
