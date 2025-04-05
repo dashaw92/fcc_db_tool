@@ -19,6 +19,9 @@ if [ "$1" == "fetch" ]; then
 fi
 printCol "Extracting data files from l_amat.zip."
 unzip l_amat.zip
+printCol "Removing quotes from EN.dat."
+sed -i -ze 's/"//g' EN.dat
+echo "Quotes removed from EN.dat."
 printCol 'Stripping excess \\r\\r\\n.'
 stripCRCRNL *.dat
 printCol "Importing data into 'fcc.db'."
